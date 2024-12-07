@@ -9,15 +9,60 @@
 </head>
 <body>
   <header>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+    <div class="header-container grid-layout">
+      <nav class="navbar full-span">
+        <picture>
+          <source srcset="images/Logo.svg" media="(min-width: 474px)" />
+          <img src="images/portfolio-logo.svg" alt="ONOH logo" />
+        </picture>
+  
+        <ul class="menu-overlay" id="desktop-hidden">
+          <li>
+            <a href="#">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#e8eaed"
+              >
+                <path
+                  d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+                /></svg
+              >
+            </a>
+          </li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+  
+        <ul>
+          <li class="mobile-hidden"><a href="index.html">Home</a></li>
+          <li class="mobile-hidden"><a href="about.html">About</a></li>
+          <li class="mobile-hidden"><a href="projects.html">Projects</a></li>
+          <li class="mobile-hidden"><a href="contact.html">Contact</a></li>
+          <li class="desktop-only">
+            <a href="#">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#000"
+              >
+                <path
+                  d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"
+                /></svg
+              >
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
+  
   <main>
 
     <section>
@@ -28,11 +73,23 @@
       </div>
     </section>
 
-    <section>
-        <div class="col-span-full video box">
-          <p>video</p>
-        </div>
-    </section>
+      <div class="grid-con">
+        <section id="player-container" class="col-span-full">
+            <video controls preload="metadata" poster="images/placeholder.jpg">
+                <source src="video/video.mp4" type="video/mp4">
+                <source src="video/video.webm" type="video/webm">
+            <p>Your browser does not support the video tag.</p>
+            </video>
+            <div class="video-controls hidden" id="video-controls">
+                <button id="play-button"><i class="fa fa-play-circle-o"></i></button>
+                <button id="pause-button"><i class="fa fa-pause-circle-o"></i></button>
+                <button id="stop-button"><i class="fa fa-stop-circle-o"></i></button>
+                <i class="fa fa-volume-up"></i>
+                <input type="range" id="change-vol" step="0.05" min="0" max="1" value="1">
+                <button id="full-screen"><i class="fa fa-arrows-alt"></i></button>
+            </div>
+        </section>
+    </div>
 
     <section>
       <div class="grid-con">
@@ -102,5 +159,6 @@
       <p>What People have to say</p>
       <div class="box"></div> -->
       
+  <script src="js/main.js"></script>
 </body>
 </html>
