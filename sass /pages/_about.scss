@@ -1,0 +1,51 @@
+ body {
+  #about-con {
+    margin-top: 128px;
+    
+      #about-text {
+        margin-top: 128px;
+
+        h1 {
+          font-size: 48px;
+          margin-bottom: 72px;
+        }
+
+        p {
+          line-height: 28px;
+        }
+      }
+
+
+      .about-btn {
+        text-align: center;
+        button {
+          background-color: #365752;
+          padding: 20px 40px;
+          font-size: 24px;
+          font-weight: 300;
+          color: #fff;
+          margin-top: 72px;
+        }
+      }
+      button {
+        background-color: #365752;
+        padding: 20px 40px;
+        font-size: 24px;
+        font-weight: 300;
+        color: #fff;
+        margin-top: 72px;
+      }
+  }
+
+  .connect {
+    margin-bottom: 128px;
+
+    .connect-content {
+      .connect-text {
+        h3 {
+          margin-bottom: 128px;
+        }
+      }
+    }
+  }
+ }
