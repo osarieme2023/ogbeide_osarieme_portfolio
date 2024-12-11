@@ -1,5 +1,13 @@
 @use '../abstracts' as a;
 
 footer {
-  background-color: grey;
+  background-color: rgba(128, 128, 128, 0.4);
+  padding: 24px 0px;
+
+  .footer-con {
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

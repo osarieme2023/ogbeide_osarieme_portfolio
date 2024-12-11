@@ -1,0 +1,55 @@
+body {
+  .contact-head {
+    margin-top: 92px;
+    margin-bottom: 92px;
+
+      h1 {
+        font-size: 36px;
+        font-weight: 300;
+        margin-bottom: 8px;
+      }
+  }
+
+  .contact {
+    .contact-form {
+      margin-bottom: 128px;
+      form {
+        input {
+          padding: 20px 0 20px 16px;
+          width: 100%;
+          margin-bottom: 42px;
+          padding-left: 16px;
+          background-color: rgba(54, 87, 82, 0.6); 
+          border: none;
+          color: #fff;
+          font-size: 20px;
+
+          
+          &::placeholder {
+            color: #fff;
+            font-size: 20px;
+          }
+        }
+
+        .message {
+          input {
+            height: 148px;
+          }
+        }
+
+        #send-btn {
+
+          button {
+            padding: 16px 40px;
+            font-size: 20px;
+            background-color: #365752;
+            color: #fff;
+            border: none;
+          }
+          
+        }
+      }
+    }
+  }
+
+}
