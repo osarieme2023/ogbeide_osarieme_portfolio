@@ -1,7 +1,28 @@
 body {
+
+  :root {
+
+    --plyr-color-main: rgba(54, 87, 82, 0.6); ;
+  
+    --plyr-control-icon-size: 15px;
+  
+    --plyr-control-radius: 20px;
+  
+    --plyr-font-family: "Helvetica Neue", Helvetica, sans-serif;
+  
+    --plyr-control-spacing: 15px;
+  
+  }
+
   .case-bg {
     margin-top: 128px;
     background-color: rgba(54, 87, 82, 0.6); 
+  }
+
+  .case-hero {
+    img {
+      width: 100%;
+    }
   }
 
 
@@ -39,5 +60,12 @@ body {
         line-height: 30px;
       }
     }
+  }
+
+  #case-video {
+    video {
+      width: 100%;
+    }
+    
   }
 }

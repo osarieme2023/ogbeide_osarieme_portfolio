@@ -1,42 +1,38 @@
 <?php
-// Include the database connection
 require_once('includes/connect.php');
 
-// Get the project_id from the URL (e.g., case-study.php?id=1)
-$project_id = isset($_GET['id']) ? (int)$_GET['id'] : 0; // Sanitize input by casting to integer
 
-// Check if the project ID is valid
+$project_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
 if ($project_id === 0) {
     echo "Invalid project ID.";
     exit;
 }
 
-// Query to get the project details and associated media
-$query = "SELECT project.project_id, project.title, project.challenge, project.solution, project.outcome, 
-                 project.team, project.role, project.duration, 
-                 media.file_path, media.media_type 
-          FROM project 
-          LEFT JOIN media ON project.project_id = media.project_id 
-          WHERE project.project_id = $project_id";
+// Query to fetch project details
+$project_query = "SELECT * FROM project WHERE project_id = $project_id";
+$project_result = mysqli_query($connect, $project_query);
 
-// Execute the query
-$results = mysqli_query($connect, $query);
-
-// Check if the query was successful
-if (!$results) {
+if (!$project_result) {
     die('Query failed: ' . mysqli_error($connect));
 }
 
-// Fetch the project data
-$project_data = mysqli_fetch_assoc($results);
+$project_data = mysqli_fetch_assoc($project_result);
 
-// If no data found for the given project ID, display a message
 if (!$project_data) {
     echo "No project found.";
     exit;
 }
-?>
 
+// Query to fetch associated media
+$media_query = "SELECT file_path, media_type FROM media WHERE project_id = $project_id";
+$media_result = mysqli_query($connect, $media_query);
+
+$media_files = [];
+while ($row = mysqli_fetch_assoc($media_result)) {
+    $media_files[] = $row;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,160 +42,161 @@ if (!$project_data) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/grid.css">
-  <title>Case-study Page</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <title>Case Study</title>
 </head>
 
 <body>
-    <header>
-        <div class="logo">
-          <img src="images/portfolio-logo.svg" alt="Logo">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">PORTFOLIO</a></li>
-                <li><a href="about.html">ABOUT</a></li>
-                <li><a href="contact.html">CONTACT</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+    <div class="header-sec grid-con">
+      <nav class="navigation col-span-full l-col-start-">
+        <picture>
+          <img src="images/main-logo.svg" alt="Logo" />
+        </picture>
+
+        <ul class="sidebar" id="desk-hid">
+          <li>
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                fill="#e8eaed">
+                <path
+                  d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+              </svg></a>
+          </li>
+          <li><a href="index.php">PORTFOLIO</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+
+        <ul>
+          <li class="hidemobile"><a href="index.php">PORTFOLIO</a></li>
+          <li class="hidemobile"><a href="about.html">ABOUT</a></li>
+          <li class="hidemobile"><a href="contact.html">CONTACT</a></li>
+          <li class="hideondesktop">
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                fill="#000">
+                <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
     <main>
-      <div class="case-hero">
-        <img src="images/Portfolio-image/zima/zima1.png" alt="Zima-bottles" width="600"> 
+      <div class="grid-con">
+      <div class="case-hero col-span-full l-col-span-full">
+        <?php 
+        $hero_image = null;
+        foreach ($media_files as $media) {
+            if ($media['media_type'] === 'image') {
+                $hero_image = $media['file_path'];
+                break;
+            }
+        }
+        if ($hero_image): ?>
+            <img src="images/<?php echo htmlspecialchars($hero_image); ?>" alt="<?php echo htmlspecialchars($project_data['title']); ?>">
+        <?php else: ?>
+            <p>No hero image available.</p>
+        <?php endif; ?>
       </div>
+      </div>
+      
 
+      
       <section class="case-bg">
         <div class="grid-con">
           <div class="col-span-full" id="projects-dis">
-            <div class=" projects-details ">
-              <h2>Project Details</h2>
-              <p><strong>Title:</strong> <?php echo htmlspecialchars($project_data['title']); ?></p>
+            <div class="projects-details">
+              <h2>Title</h2>
+              <p><?php echo htmlspecialchars($project_data['title']); ?></p>
             </div>
-      
-    
-            <div class=" projects-details ">
+            <div class="projects-details">
               <h2>Team</h2>
-              <p>Wisdom Okutepa</p>
-              <p>Ogbeide Osarieme</p>
+              <p><?php echo htmlspecialchars($project_data['team']); ?></p>
             </div>
-      
-            <div class="projects-details ">
+            <div class="projects-details">
               <h2>Role</h2>
-              <p>3D Animator</p>
-              <p>Video Editor</p>
+              <p><?php echo htmlspecialchars($project_data['role']); ?></p>
             </div>
-  
             <div class="projects-details">
               <h2>Duration</h2>
-              <p>14 Weeks</p>
+              <p><?php echo htmlspecialchars($project_data['duration']); ?></p>
             </div>
           </div>
         </div>  
       </section>
-  
-      <div class="col-span-full case-content-1">
-        <img src="images/Portfolio-image/zima/zima2.png" alt="bottle2" width="600">
-      </div>
 
       <section class="case-content">
         <div class="grid-con">
-          
-           
           <div class="col-span-full case-content-2">
-            <p>
-              Zima, a nostalgic malt beverage originally launched in 1993, has been reimagined 
-              with a fresh twist in our project. Our team developed a brand that pays homage to 
-              Zima's unique legacy while introducing exciting new flavors: Red Mango Blend,  
-              Berry Bliss Blend, and Blend Zero. Each flavor is crafted to evoke the refreshing 
-              essence of Zima, aiming to attract both loyal fans and new consumers looking for 
-              a vibrant and enjoyable drink experience.
-            </p>
-          </div> 
-        </div>
-      </section>
-    
-      <div class="col-span-full case-content-1">
-        <img src="images/Portfolio-image/zima/zima3.png" alt="bottle3" width="600">
-      </div>
-
-      <section class="case-content">
-        <div class="grid-con">
-          
-          
-          <div class="col-span-full case-content-2">
-            <h3>The Challenge</h3>
-            <p>
-              During the project, I struggled to align the 3D animation's <br>
-            color palette with Zima's brand identity, requiring multiple <br>
-            iterations and teamwork to achieve a cohesive visual narrative <br>
-            that appealed to both nostalgic and new audiences.<br>
-            </p>
+            <h3>The Problem</h3>
+            <p><?php echo nl2br(htmlspecialchars($project_data['challenge'])); ?></p>
           </div>
         </div>
       </section>
-    
-      <div class="col-span-full case-content-1">
-        <img src="images/Portfolio-image/zima/zima4.png" alt="bottle4" width="600">
-      </div>
-  
+
+      <
       <section class="case-content">
         <div class="grid-con">
-          
-          
           <div class="col-span-full case-content-2">
             <h3>The Solution</h3>
-          <p>To address this, I collaborated with my teammate to develop a 
-          unified color palette that blended Zima's original branding 
-          with modern hues. By applying this palette in Cinema 4D and 
-          using color grading techniques in After Effects, we achieved a 
-          consistent and engaging visual representation of the brand.
+            <p><?php echo nl2br(htmlspecialchars($project_data['solution'])); ?></p>
           </div>
         </div>
       </section>
-  
-    
-      <div class="col-span-full case-content-1">
-        <img src="images/Portfolio-image/zima/zima5.png" alt="bottle5" width="600">
-      </div>
 
+      
+      <section class="case-gallery">
+        <div class="grid-con">
+        <div class="col-span-full">
+          <?php foreach ($media_files as $media): ?>
+            <?php if ($media['media_type'] === 'image'): ?>
+              <div class="col-span-full case-content-1">
+                <img src="images/<?php echo htmlspecialchars($media['file_path']); ?>" alt="Gallery Image">
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </div>
+        </div>
+        
+      </section>
+
+      
       <section class="case-content">
         <div class="grid-con">
           <div class="col-span-full case-content-2">
             <h3>The Outcome</h3>
-            <p>The project resulted in a visually appealing promotional video
-            that effectively showcased the new Zima brand and its flavors,
-            appealing to both nostalgic and younger audiences.
-            </p>
+            <p><?php echo nl2br(htmlspecialchars($project_data['outcome'])); ?></p>
           </div>
         </div>
       </section>
+
+
+      <section id="case-video">
   
-    
-  
-      <section>
-        <video width="640" height="360" controls>
-        <source src="images/Zima-infomacial.MP4" type="video/mp4">
-        Your browser does not support the video tag.
+        <video class="player" controls>
+          <?php
+          foreach ($media_files as $media) {
+              if ($media['media_type'] === 'video') {
+                  echo '<source src="images/' . htmlspecialchars($media['file_path']) . '" type="video/mp4">';
+                  break; 
+              }
+          }
+          ?>
+          Your browser doest support the video tag.
         </video>
       </section>
-
-      <div>
-        <a href="zenbuds.html">
-          <button><strong>Next Project</strong></button>
-        </a>
-      </div>
     </main>
-  
+
     <footer class="grid-con">
       <div class="col-span-full footer-con">
         <small>© OGBEIDE ONOH. ALL RIGHTS RESERVED.</small> 
-          <div>
-            <a href="https://www.linkedin.com/in/your-profile" target="_blank">
-              <img src="images/Portfolio-image/Cover images/LinkedIn.png" alt="LinkedIn Profile" width="30">
-            </a>
-          </div>
       </div>
-  </footer> 
+    </footer>
+
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
