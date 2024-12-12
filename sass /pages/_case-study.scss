@@ -1,0 +1,43 @@
+body {
+  .case-bg {
+    margin-top: 128px;
+    background-color: rgba(54, 87, 82, 0.6); 
+  }
+
+
+  #projects-dis {
+    padding: 34px 0px 34px 34px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    
+    
+    .projects-details {
+      margin-bottom: 24px;
+      h2 {
+        margin-bottom: 16px;
+      }
+
+      p {
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .case-content {
+    background-color: rgba(54, 87, 82, 0.6); 
+    padding: 48px 0px;
+    color: #fff;
+
+    .case-content-2 {
+      h3 {
+        font-size: 24px;
+        margin-bottom: 16px;
+      }
+
+      p {
+        line-height: 30px;
+      }
+    }
+  }
+}
