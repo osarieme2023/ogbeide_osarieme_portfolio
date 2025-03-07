@@ -64,13 +64,21 @@ while ($row = mysqli_fetch_assoc($media_result)) {
           </li>
           <li><a href="index.php">PORTFOLIO</a></li>
           <li><a href="about.html">ABOUT</a></li>
+<<<<<<< Updated upstream
           <li><a href="contact.html">CONTACT</a></li>
+=======
+          <li><a href="contact.php">CONTACT</a></li>
+>>>>>>> Stashed changes
         </ul>
 
         <ul>
           <li class="hidemobile"><a href="index.php">PORTFOLIO</a></li>
           <li class="hidemobile"><a href="about.html">ABOUT</a></li>
+<<<<<<< Updated upstream
           <li class="hidemobile"><a href="contact.html">CONTACT</a></li>
+=======
+          <li class="hidemobile"><a href="contact.php">CONTACT</a></li>
+>>>>>>> Stashed changes
           <li class="hideondesktop">
             <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                 fill="#000">
